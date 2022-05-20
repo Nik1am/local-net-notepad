@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Storage Example</title>
+        <style>
+            html , body{
+                margin: 0px;
+                border: 0px;
+                padding:0px;
+            }
+            textarea {
+                margin: 0px;
+                border: 0px;
+                padding:0px;
+                outline: none !important;
+                resize: none;
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+    </head>
+    <body>
+        <textarea id="input">Smh</textarea>
+        <script>
+            var storage = window.localStorage;
+            const input = document.getElementById('input');
+
+            window.onload = function() {
+                input.value = storage.getItem('Value');
+            };
+
+            input.onchange = function() {
+                storage.setItem('Value',input.value);
+            };
+        </script>
+    </body>
+</html>
