@@ -41,6 +41,13 @@
                 bottom: 0;
                 margin: 6px;
             }
+            #clear-notes {
+                position: absolute;
+                bottom: 20px;
+                background-color: #F00;
+                right: 50%;
+                transform: translate(50%,0);
+            }
         </style>
     </head>
     <body>
@@ -48,14 +55,17 @@
         <div id="settings">
             <p>Font Size:</p>
             <p>1em <input type="range" id="font-size" step="0.1" value="2" max="4" min="1"> 4em</p>
+
+            <button id="clear-notes">Clear notes</button>
         </div>
         <div id="settings-checkbox">
-            Settings: <input type='checkbox' id="checkbox" onchange="check()">
+            Settings: <input type='checkbox' id="checkbox" autocomplete="off" onchange="check()">
         </div>
         <script>
             var storage = window.localStorage;
             const input = document.getElementById('input');
             const font_size = document.getElementById('font-size');
+            const CLEAR_NOTES = document.getElementById('clear-notes');
 
             var chbox;
             chbox=document.getElementById('checkbox');
@@ -66,6 +76,14 @@
 	            else {
 		            closeSettings();
 	            }
+            };
+
+            CLEAR_NOTES.onclick = function() {
+                if (confirm('Are you sure you want to clear all your notes??')) {
+                    storage.setItem('Value','');
+                    input.value = "";
+                    alert('All notes have been cleared!');
+                }
             };
 
             window.onload = function() {
