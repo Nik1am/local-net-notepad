@@ -19,21 +19,78 @@
                 width: 100vw;
                 height: 100vh;
                 font-size: 2em;
+                z-index: 0;
+            }
+            #settings {
+                width: 0%;
+                height: 100%;
+                position: absolute;
+                z-index: 99;
+                top: 0;
+                right: 0;
+                border-left: 2px solid black;
+                transition: 0.5s;
+                overflow-x: hidden;
+                background-color: #DDD;
+            }
+            #settings-checkbox {
+                position: absolute;
+                z-index: 100;
+                overflow-x: hidden;
+                right: 0;
+                bottom: 0;
+                margin: 6px;
             }
         </style>
     </head>
     <body>
-        <textarea id="input">Smh</textarea>
+        <textarea id="input" spellcheck="false">Smh</textarea>
+        <div id="settings">
+            <p>Font Size:</p>
+            <p>1em <input type="range" id="font-size" step="0.1" value="2" max="4" min="1"> 4em</p>
+        </div>
+        <div id="settings-checkbox">
+            Settings: <input type='checkbox' id="checkbox" onchange="check()">
+        </div>
         <script>
             var storage = window.localStorage;
             const input = document.getElementById('input');
+            const font_size = document.getElementById('font-size');
+
+            var chbox;
+            chbox=document.getElementById('checkbox');
+            function check() {
+                if (chbox.checked) {
+		            openSettings();
+	            }
+	            else {
+		            closeSettings();
+	            }
+            };
 
             window.onload = function() {
                 input.value = storage.getItem('Value');
+
+                
+                font_size.value = storage.getItem('FontSize');
+                input.style.fontSize = font_size.value+'em'
+            };
+
+            font_size.onchange = function() {
+                storage.setItem('FontSize',font_size.value);
+                input.style.fontSize = font_size.value+'em'
             };
 
             input.onchange = function() {
                 storage.setItem('Value',input.value);
+            };
+
+            function openSettings() {
+                document.getElementById("settings").style.width = "20%";
+            };
+
+            function closeSettings() {
+                document.getElementById("settings").style.width = "0%";
             };
         </script>
     </body>
